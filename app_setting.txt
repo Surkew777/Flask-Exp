@@ -1,0 +1,117 @@
+
+# # So we imported all the neccesary libraries 
+
+
+
+# from flask import Flask, render_template, request, redirect, url_for, flash, session
+# from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required 
+# from flask import Flask
+# from flask_sqlalchemy import SQLAlchemy
+# from email_validator import validate_email, EmailNotValidError
+# from werkzeug.security import generate_password_hash, check_password_hash
+# from flask_login import login_manager
+# # Initialize SQLAlchemy
+
+
+
+
+# # Initiated the database 
+# #  
+
+
+
+
+
+
+# app = Flask(__name__)
+
+# app.secret_key = 'your_secret_key' 
+
+
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db' 
+# app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+# db = SQLAlchemy(app)
+
+
+
+
+# # created the app  
+
+# login_manager = LoginManager(app)
+
+# login_manager.login_view = 'login'
+
+
+
+
+@login-manager.load_user 
+def load_user(user_id):
+    return Memeber.query.get(int(user_id))
+
+
+
+The follwings are abstractions of the methods we will Implement 
+
+
+#user must see a home page
+# home page must have login and register links , This page will resemble an Interface where user's are 
+# able to view that this a blog web app, 
+
+
+def home():
+    pass  
+
+
+
+# user must have user's page where they can see their blogs 
+# user's page must require user's login  
+# where user's can see their blogs 
+# this page must have create_blog, updat_blogs, delete_blogs,  logout  
+
+def profile():
+    pass 
+
+
+
+# user's must register , this page must also have a link so user's can login after  registering
+
+def register():
+     pass 
+
+
+
+
+
+
+# user's must login 
+def login():
+    pass 
+
+
+
+ #  user's must be able to logout, This page ust require login
+ def log_out():
+     pass 
+
+
+
+ # user's must be able to create blogs 
+ def create_blogs():
+    pass 
+
+
+
+# user's must be bale to update blogs 
+ def update_blogs(): 
+    pass 
+
+
+# user's must be able to delete blogs 
+def delete_blogs():
+    pass  
+
+
+
+
+

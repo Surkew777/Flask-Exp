@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog CRUD App</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            padding: 2rem;
+            background: #f8f9fa;
+        }
+        .blog-card {
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .action-btns {
+            display: flex;
+            gap: 0.5rem;
+        }
+        .crud-section {
+            margin-bottom: 1.5rem;
+        }
+        .crud-section .card {
+            border: none;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .crud-section .card-header {
+            background: #f8f9fa;
+            border-bottom: 1px solid #ddd;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="mb-4">Welcome, {{ username }}!</h1>
+
+        <!-- Add Blog Section -->
+        <div class="crud-section">
+            <div class="card">
+                <div class="card-header">Add New Blog</div>
+                <div class="card-body">
+                    <form id="add-blog-form" method="POST" action="{{ url_for('create_blogs') }}">
+                        <div class="mb-3">
+                            <label for="blog-content" class="form-label">Content:</label>
+                            <textarea class="form-control" id="blog-content" name="blog" rows="3" placeholder="Write your blog content here..." required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-sm">Add Blog</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Delete or Edit Blog Section -->
+        <div class="crud-section">
+            <div class="card">
+                <div class="card-header">Delete or Edit Blog</div>
+                <div class="card-body">
+                    <form id="delete-blog-form" method="POST" action="#">
+                        <div class="mb-3">
+                            <label for="delete-blog-id" class="form-label">Blog ID:</label>
+                            <input type="text" class="form-control" id="delete-blog-id" name="blog_id" placeholder="Enter blog ID to delete or edit" required>
+                        </div>
+                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this blog?')">Delete Blog</button>
+                        <button type="submit" class="btn btn-success btn-sm">Edit Blog</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- User Blogs Section -->
+        <h2 class="mb-4">Your Blogs</h2>
+        <div id="user-blogs">
+            <!-- Placeholder for blog iteration -->
+            <!-- You can add the iteration logic here -->
+            <!-- Example structure for a single blog card: -->
+            <!--
+            <div class="card blog-card">
+                <div class="card-body">
+                    <h5 class="card-title">Blog Title</h5>
+                    <p class="card-text">Blog content goes here...</p>
+                    <p class="text-muted">Written on: 2023-10-01</p>
+                    <div class="action-btns mt-3">
+                        <a href="#" class="btn btn-sm btn-success">Edit</a>
+                        <form method="POST" action="#" style="display:inline;">
+                            <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this blog?')">Delete</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            -->
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+
+'''
+
+@app.route('/delete_blog/<int:blog_id>', methods=["POST"])
+@login_required
+def delete_blog(blog_id):
+    # Fetch the blog by ID
+    blog = Blog.query.get_or_404(blog_id)
+
+    # Ensure the user owns the blog
+    if blog.member_id != current_user.id:
+        flash("You do not have permission to delete this blog.", "danger")
+        return redirect(url_for('profile'))
+
+    # Delete the blog from the database
+    db.session.delete(blog)
+    db.session.commit()
+
+    flash("Blog deleted successfully!", "success")
+    return redirect(url_for('profile'))
+''' 
+
+
+
+Cheesyyyyyyyyy  stuff 
+
+get blog id in the route 
+
+retrieve the blog_id by querying the db by that id 
+
+if it exists , blog.member.id is not eqal to current_user.id #this says if the blog id not the current_user's id , then they can not delete that blog 
+otherwise , delete the blog 
+
+return us to profile.
